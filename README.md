@@ -2,7 +2,7 @@
 
 ## Requirements
 
- - Ansible 1.9+
+ - Ansible 2.0+
  - A remote system running RHEL/CentOS 7
 
 ## Running the playbook

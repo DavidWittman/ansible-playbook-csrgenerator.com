@@ -1,5 +1,5 @@
 ---
-# Requires Ansible 2.0+
+# Unarchive from URL requires Ansible 2.0
 - name: download version
   unarchive:
     copy: no
@@ -20,7 +20,6 @@
   pip:
     name: virtualenv
 
-# TODO(dw): Pin version
 - name: install python dependencies
   pip:
     requirements: "{{ csrgen_home }}/src/requirements.txt"
