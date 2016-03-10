@@ -10,6 +10,8 @@ nginx_vhosts:
     keepalive_timeout: 5
     root: "{{ csrgen_home }}/src/static"
     extra_parameters: |
+      gzip on;
+      gzip_types text/html text/plain text/xml text/css application/x-javascript application/json;
       location / {
         try_files $uri @app;
       }
