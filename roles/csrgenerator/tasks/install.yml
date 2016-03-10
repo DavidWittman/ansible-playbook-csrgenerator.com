@@ -1,0 +1,48 @@
+---
+# Requires Ansible 2.0+
+- name: download version
+  unarchive:
+    copy: no
+    src: "{{ csrgen_src_url }}"
+    dest: "{{ csrgen_home }}/archive"
+    owner: "{{ csrgen_user }}"
+    group: "{{ csrgen_group }}"
+
+- name: create symlink
+  file:
+    src: "{{ csrgen_home}}/archive/csrgenerator.com-{{ csrgen_version }}"
+    dest: "{{ csrgen_home }}/src"
+    state: link
+    owner: "{{ csrgen_user }}"
+    group: "{{ csrgen_group }}"
+
+- name: install virtualenv
+  pip:
+    name: virtualenv
+
+# TODO(dw): Pin version
+- name: install python dependencies
+  pip:
+    requirements: "{{ csrgen_home }}/src/requirements.txt"
+    virtualenv: "{{ csrgen_virtualenv }}"
+
+- name: create systemd service file
+  template:
+    src: csrgenerator.service.j2
+    dest: /etc/systemd/system/csrgenerator.service
+
+- name: create systemd socket file
+  template:
+    src: csrgenerator.socket.j2
+    dest: /etc/systemd/system/csrgenerator.socket
+
+- name: create config for systemd private tmp
+  template:
+    src: tmpfiles-csrgenerator.conf.j2
+    dest: /usr/lib/tmpfiles.d/csrgenerator.conf
+
+- name: start and enable csrgenerator
+  service:
+    name: csrgenerator
+    state: started
+    enabled: yes

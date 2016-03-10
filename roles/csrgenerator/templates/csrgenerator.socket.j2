@@ -1,0 +1,8 @@
+[Unit]
+Description=csrgenerator gunicorn socket
+
+[Socket]
+ListenStream={{ csrgen_listen }}
+
+[Install]
+WantedBy=sockets.target

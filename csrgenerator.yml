@@ -1,0 +1,6 @@
+---
+- name: deploy csrgenerator.com
+  hosts: all
+  roles:
+    - csrgenerator
+    - nginx

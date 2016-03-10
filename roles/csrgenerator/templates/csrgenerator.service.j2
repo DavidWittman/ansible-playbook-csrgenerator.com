@@ -1,0 +1,17 @@
+[Unit]
+Description=csrgenerator gunicorn daemon
+Requires=csrgenerator.socket
+After=network.target
+
+[Service]
+PIDFile={{ csrgen_pidfile }}
+User={{ csrgen_user }}
+Group={{ csrgen_group }}
+WorkingDirectory={{ csrgen_home }}/src
+ExecStart={{ csrgen_virtualenv }}/bin/gunicorn --pid {{ csrgen_pidfile }} app:app
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

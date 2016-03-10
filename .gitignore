@@ -1,0 +1,4 @@
+roles/*
+!roles/csrgenerator
+*.swp
+*.pyc

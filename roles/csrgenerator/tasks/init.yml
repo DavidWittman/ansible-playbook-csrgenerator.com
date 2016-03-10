@@ -1,0 +1,33 @@
+---
+- name: create group
+  group:
+    name: "{{ csrgen_group }}"
+    system: yes
+
+- name: create user
+  user:
+    name: "{{ csrgen_user }}"
+    home: "{{ csrgen_home }}"
+    system: yes
+
+- name: create extra directories
+  file:
+    path: "{{ csrgen_home }}/{{ item }}"
+    state: directory
+    owner: "{{ csrgen_user }}"
+    group: "{{ csrgen_group }}"
+  with_items:
+    - archive
+    - conf
+    - logs
+    - run
+
+- name: install dependencies
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - gcc
+    - openssl-devel
+    - python-pip
+    - python-devel

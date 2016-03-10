@@ -1,0 +1,10 @@
+---
+csrgen_home: /opt/csrgenerator
+csrgen_virtualenv: "{{ csrgen_home }}/.env"
+csrgen_user: csrgen
+csrgen_group: "{{ csrgen_user }}"
+csrgen_pidfile: "{{ csrgen_home }}/run/pid"
+csrgen_listen: 127.0.0.1:8080
+
+csrgen_version: "master"
+csrgen_src_url: "https://github.com/DavidWittman/csrgenerator.com/archive/{{ csrgen_version }}.tar.gz"
