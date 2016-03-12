@@ -2,3 +2,5 @@ roles/*
 !roles/csrgenerator
 *.swp
 *.pyc
+*.retry
+.vagrant/
