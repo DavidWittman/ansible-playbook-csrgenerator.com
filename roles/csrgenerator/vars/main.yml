@@ -1,0 +1,7 @@
+---
+nginx_remove_default_vhost: true
+nginx_upstreams:
+  - name: csrgenerator
+    servers:
+      - "{{ csrgen_listen }}"
+nginx_vhosts: "{{ csrgen_vhost_https if csrgen_https else csrgen_vhost_http }}"

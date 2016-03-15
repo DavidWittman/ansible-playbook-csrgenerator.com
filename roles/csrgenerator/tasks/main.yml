@@ -1,3 +1,8 @@
 ---
-- include: init.yml
-- include: install.yml
+- name: do init tasks
+  include: init.yml
+- name: do ssl stuff
+  include: certs.yml
+  when: csrgen_https|bool
+- name: install csrgenerator
+  include: install.yml

@@ -1,0 +1,28 @@
+---
+- name: generate diffie hellman parameters
+  command: openssl dhparam -out /etc/ssl/dhparam2048.pem 2048
+           creates=/etc/ssl/dhparam2048.pem
+
+- name: copy https ca cert
+  copy:
+    content: "{{ csrgen_ca_cert }}"
+    dest: /etc/ssl/certs/csrgenerator.com-ca.crt
+    mode: 0444
+    owner: root
+    group: root
+
+- name: copy https cert
+  copy:
+    content: "{{ csrgen_cert }}{{ csrgen_ca_cert }}"
+    dest: /etc/ssl/certs/csrgenerator.com.crt
+    mode: 0444
+    owner: root
+    group: root
+
+- name: copy https private key
+  copy:
+    content: "{{ csrgen_private_key }}"
+    dest: /etc/pki/tls/private/csrgenerator.com.key
+    mode: 0400
+    owner: root
+    group: root

@@ -1,4 +1,11 @@
 ---
+- name: check that certificates are provided if https
+  assert:
+    that:
+      - csrgen_cert is defined
+      - csrgen_private_key is defined
+  when: csrgen_https|bool
+
 - name: create group
   group:
     name: "{{ csrgen_group }}"
@@ -22,6 +29,12 @@
     - logs
     - run
 
+# TODO(dw): We can avoid pulling in EPEL if we get pip elsewhere
+- name: install epel repo
+  yum:
+    name: epel-release
+    state: present
+
 - name: install dependencies
   yum:
     name: "{{ item }}"
@@ -31,3 +44,10 @@
     - openssl-devel
     - python-pip
     - python-devel
+    - libsemanage-python
+
+- name: set httpd_can_network_connect (selinux)
+  seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes

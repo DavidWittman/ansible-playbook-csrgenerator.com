@@ -1,6 +1,8 @@
 ---
 - name: deploy csrgenerator.com
   hosts: all
+  vars:
+    csrgen_https: yes
   roles:
     - csrgenerator
     - nginx
