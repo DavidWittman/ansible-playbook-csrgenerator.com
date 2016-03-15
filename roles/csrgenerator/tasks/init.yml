@@ -3,6 +3,7 @@
   assert:
     that:
       - csrgen_cert is defined
+      - csrgen_ca_cert is defined
       - csrgen_private_key is defined
   when: csrgen_https|bool
 
@@ -51,3 +52,4 @@
     name: httpd_can_network_connect
     state: yes
     persistent: yes
+  when: ansible_selinux.status == "enabled"
