@@ -7,6 +7,7 @@
     dest: "{{ csrgen_home }}/archive"
     owner: "{{ csrgen_user }}"
     group: "{{ csrgen_group }}"
+  notify: restart csrgenerator
 
 - name: create symlink
   file:

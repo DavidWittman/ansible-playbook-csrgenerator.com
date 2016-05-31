@@ -1,0 +1,5 @@
+---
+- name: restart csrgenerator
+  service:
+    name: csrgenerator
+    state: restarted
